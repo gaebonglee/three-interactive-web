@@ -51,7 +51,11 @@ function init() {
 
   scene.add(card.mesh);
 
-  gsap.to(card.mesh.rotation, { y: -Math.PI * 4 });
+  gsap.to(card.mesh.rotation, {
+    y: -Math.PI * 4,
+    duration: 2.5,
+    ease: "back.out(2.5)",
+  });
 
   const cardFolder = gui.addFolder("Card");
   cardFolder
@@ -107,6 +111,11 @@ function init() {
     button.style.backgroundColor = color;
     button.addEventListener("click", () => {
       card.mesh.material.color = new Three.Color(color);
+      gsap.to(card.mesh.rotation, {
+        y: card.mesh.rotation.y - Math.PI / 2,
+        duration: 2.5,
+        ease: "back.out(2.5)",
+      });
     });
 
     container.appendChild(button);
