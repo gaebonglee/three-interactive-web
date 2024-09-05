@@ -26,7 +26,7 @@ async function init() {
     500
   );
 
-  camera.position.z = 5;
+  camera.position.set(0, 1, 5);
   //-------------Controls----------------//
   new OrbitControls(camera, renderer.domElement);
 
@@ -37,16 +37,16 @@ async function init() {
   );
 
   //-------Text-------//
-  const textGeometry = new TextGeometry("안녕 링구들!", {
+  const textGeometry = new TextGeometry("하이 링구들", {
     font,
     size: 0.5,
     height: 0.1,
     bevelEnabled: true,
-    bevelSegments: 5,
-    bevelSize: 0.02,
-    bevelThickness: 0.02,
+    bevelSegments: 1,
+    bevelSize: 0.01,
+    bevelThickness: 0.01,
   });
-  const textMaterial = new Three.MeshPhongMaterial({ color: 0xffcdcd6 });
+  const textMaterial = new Three.MeshPhongMaterial();
 
   const text = new Three.Mesh(textGeometry, textMaterial);
 
@@ -55,14 +55,32 @@ async function init() {
   //-------------Texture--------------//
   const textureLoader = new Three.TextureLoader();
 
-  const textTexture = textureLoader.load("./assets/texture/paperTexture.jpg");
+  const textTexture = textureLoader.load("./assets/texture/treeTexture.jpg");
+
+  textMaterial.map = textTexture;
 
   scene.add(text);
 
   //-----ambientLight------//
-  const ambientLight = new Three.AmbientLight(0xffffff, 1);
-
+  const ambientLight = new Three.AmbientLight(0xffffff, 0.5);
   scene.add(ambientLight);
+
+  //-----SpotLight-------//
+  const spotLight = new Three.SpotLight(0xffffff, 5, 30, Math.PI * 0.3, 0.5);
+  spotLight.position.set(0, 3, 5);
+  spotLight.angle = Math.PI * 0.1;
+  spotLight.castShadow = true;
+  spotLight.shadow.mapSize.width = 1024;
+  spotLight.shadow.mapSize.height = 1024;
+
+  scene.add(spotLight);
+
+  //------Plane-------//
+  const planeGeometry = new Three.PlaneGeometry(2000, 2000);
+  const planeMaterial = new Three.MeshPhongMaterial({ color: 0x111111 });
+  const plane = new Three.Mesh(planeGeometry, planeMaterial);
+  plane.position.z = -10;
+  scene.add(plane);
 
   //------PointLight-------//
   const pointLight = new Three.PointLight(0xffffff, 1.5);
@@ -75,9 +93,8 @@ async function init() {
   render();
 
   function render() {
-    renderer.render(scene, camera);
-
     requestAnimationFrame(render);
+    renderer.render(scene, camera);
   }
 
   function handleResize() {
