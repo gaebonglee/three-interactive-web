@@ -1,5 +1,6 @@
 import * as Three from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { gsap } from "gsap";
 import { GUI } from "lil-gui";
 import Card from "./card";
 window.addEventListener("load", function () {
@@ -47,7 +48,10 @@ function init() {
   });
 
   card.mesh.rotation.z = Math.PI * 0.05;
+
   scene.add(card.mesh);
+
+  gsap.to(card.mesh.rotation, { y: -Math.PI * 4 });
 
   const cardFolder = gui.addFolder("Card");
   cardFolder
@@ -99,7 +103,12 @@ function init() {
 
   COLORS.forEach((color) => {
     const button = document.createElement("button");
+
     button.style.backgroundColor = color;
+    button.addEventListener("click", () => {
+      card.mesh.material.color = new Three.Color(color);
+    });
+
     container.appendChild(button);
   });
 }
