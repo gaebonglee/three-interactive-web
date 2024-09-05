@@ -7,3 +7,39 @@ body {
   /* color: #ff8b8b; */
 }
 
+.container {
+  position: absolute;
+  bottom: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 15px;
+}
+.container button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.container button:not(:first-child) {
+  margin-left: 15px;
+}
+
+/* button resetStyle */
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  outline: none;
+  cursor: pointer;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}

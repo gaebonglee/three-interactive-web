@@ -8,6 +8,9 @@ window.addEventListener("load", function () {
 
 function init() {
   const gui = new GUI();
+
+  const COLORS = ["#D9117F", "#03C75A", "#8BCED7", "#FECD46"];
+
   const renderer = new Three.WebGLRenderer({
     antialias: true,
     alpha: true,
@@ -40,7 +43,7 @@ function init() {
     width: 10,
     height: 15.8,
     radius: 0.5,
-    color: "#17B75E",
+    color: COLORS[0],
   });
 
   card.mesh.rotation.z = Math.PI * 0.05;
@@ -91,4 +94,12 @@ function init() {
   }
 
   window.addEventListener("resize", handleResize);
+
+  const container = document.querySelector(".container");
+
+  COLORS.forEach((color) => {
+    const button = document.createElement("button");
+    button.style.backgroundColor = color;
+    container.appendChild(button);
+  });
 }
